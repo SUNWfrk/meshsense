@@ -1,6 +1,6 @@
-FROM node
+FROM node:23 AS builder
 
-RUN apt-get update
+RUN apt-get update && apt-get install -y libdbus-1-3 && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
@@ -14,10 +14,11 @@ WORKDIR /app/ui
 RUN npm install
 RUN npm run build
 
-WORKDIR /app/api/dist
-
-RUN apt-get update && apt-get install -y libdbus-1-3 && rm -rf /var/lib/apt/lists/*
-
+FROM node:23-alpine
 EXPOSE 5920
 
+RUN apk --no-cache add dbus-dev
+COPY --from=builder /app/ /app/
+
+WORKDIR /app/api/dist
 CMD ["node", "index.cjs"]
