@@ -1,4 +1,5 @@
 # MeshSense Docker image
+[![Docker](https://github.com/SUNWfrk/meshsense/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/SUNWfrk/meshsense/actions/workflows/docker-publish.yml)
 
 ## Warnings
 
